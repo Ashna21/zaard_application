@@ -1,0 +1,24 @@
+﻿@model zaard_application.Models.User
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm("Login", "Users", FormMethod.Post, new { @class = "form" }))
+{
+
+    <div calls ="form-group">
+        @Html.LabelFor(m=>m.name)
+        @Html.TextBoxFor(m=>m.name, new { @class = "form-control" })
+    </div>
+    <div calls = "form-group" >
+        @Html.LabelFor(m => m.password)
+        @Html.TextBoxFor(m => m.password, new { @class = "form-control" })
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Login" />
+}
+<p>
+</p>
+@Html.ActionLink("Sign Up!", "Create", "Users", null, null)
