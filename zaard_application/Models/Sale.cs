@@ -15,8 +15,8 @@ namespace zaard_application.Models
     public partial class Sale
     {
         public int saleID { get; set; }
-        public string userID { get; set; }
-        public string supplierID { get; set; }
+        public int userID { get; set; }
+        public int supplierID { get; set; }
         public int buyItemID { get; set; }
         public int bidItemID { get; set; }
         public Nullable<System.TimeSpan> time { get; set; }

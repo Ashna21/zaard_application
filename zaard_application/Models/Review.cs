@@ -17,9 +17,9 @@ namespace zaard_application.Models
         public int buyItemID { get; set; }
         public string reviewText { get; set; }
         public Nullable<int> starValue { get; set; }
-        public string userID { get; set; }
+        public int userID { get; set; }
         public System.DateTime date { get; set; }
-        public string reviewID { get; set; }
+        public int reviewID { get; set; }
     
         public virtual BuyItem BuyItem { get; set; }
         public virtual User User { get; set; }

@@ -21,7 +21,7 @@ namespace zaard_application.Models
             this.Sales = new HashSet<Sale>();
         }
     
-        public string supplierID { get; set; }
+        public int supplierID { get; set; }
         public string supplierPhone { get; set; }
         public string supplierEmail { get; set; }
     

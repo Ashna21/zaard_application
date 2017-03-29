@@ -13,10 +13,10 @@ namespace zaard_application.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class zaardEntities1 : DbContext
+    public partial class zaardCurrentEntities : DbContext
     {
-        public zaardEntities1()
-            : base("name=zaardEntities1")
+        public zaardCurrentEntities()
+            : base("name=zaardCurrentEntities")
         {
         }
     

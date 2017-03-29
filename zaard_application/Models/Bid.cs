@@ -16,7 +16,7 @@ namespace zaard_application.Models
     {
         public int bidAmount { get; set; }
         public System.DateTime bidTime { get; set; }
-        public string userID { get; set; }
+        public int userID { get; set; }
         public int bidItemID { get; set; }
     
         public virtual BidItem BidItem { get; set; }

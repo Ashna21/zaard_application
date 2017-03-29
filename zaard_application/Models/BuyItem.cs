@@ -32,7 +32,7 @@ namespace zaard_application.Models
         public string itemLink { get; set; }
         public string itemLocation { get; set; }
         public string itemDescription { get; set; }
-        public string supplierID { get; set; }
+        public int supplierID { get; set; }
         public Nullable<bool> isDigital { get; set; }
         public byte[] image { get; set; }
     

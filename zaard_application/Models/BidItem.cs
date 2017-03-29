@@ -19,7 +19,7 @@ namespace zaard_application.Models
         public string itemLink { get; set; }
         public string itemLocation { get; set; }
         public string itemDescription { get; set; }
-        public string UserID { get; set; }
+        public int UserID { get; set; }
         public Nullable<bool> isDigital { get; set; }
         public int bidItemID { get; set; }
         public Nullable<bool> auctionStatus { get; set; }

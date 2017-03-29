@@ -12,7 +12,7 @@ namespace zaard_application.Controllers
 {
     public class UsersController : Controller
     {
-        private zaardEntities1 db = new zaardEntities1();
+        private zaardCurrentEntities db = new zaardCurrentEntities();
 
         // GET: Users
         public ActionResult Index()
@@ -64,7 +64,7 @@ namespace zaard_application.Controllers
         {
             user.createdOn = DateTime.Now;
             Random rand = new Random();
-            user.userID =  rand.Next().ToString();
+            user.userID = rand.Next();
             if (ModelState.IsValid)
             {
                 

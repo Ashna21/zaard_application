@@ -19,7 +19,8 @@ namespace zaard_application.Models
         public string city { get; set; }
         public string state { get; set; }
         public int addressID { get; set; }
-        public string UserID { get; set; }
+        public string email { get; set; }
+        public int UserID { get; set; }
     
         public virtual User User { get; set; }
     }

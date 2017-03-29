@@ -14,7 +14,7 @@ namespace zaard_application.Models
     
     public partial class paymentInfo
     {
-        public string userID { get; set; }
+        public int userID { get; set; }
         public int paymentID { get; set; }
         public string nameOnCard { get; set; }
         public string cardNum { get; set; }
