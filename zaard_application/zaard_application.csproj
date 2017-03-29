@@ -198,6 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BuyItemsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -335,6 +336,11 @@
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Users\Welcome.cshtml" />
+    <Content Include="Views\BuyItems\Create.cshtml" />
+    <Content Include="Views\BuyItems\Delete.cshtml" />
+    <Content Include="Views\BuyItems\BookDetails.cshtml" />
+    <Content Include="Views\BuyItems\Edit.cshtml" />
+    <Content Include="Views\BuyItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,111 @@
+﻿@model IEnumerable<zaard_application.Models.BuyItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.stock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.released)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemType)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.genre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.fiction)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.minAge)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemLink)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isDigital)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Supplier.supplierPhone)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.stock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.released)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemType)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.genre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.fiction)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.minAge)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemLink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isDigital)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Supplier.supplierPhone)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.buyItemID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.buyItemID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.buyItemID })
+        </td>
+    </tr>
+}
+
+</table>

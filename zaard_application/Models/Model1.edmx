@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="zaardCurrentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="zaardCurrentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="address">
           <Key>
             <PropertyRef Name="addressID" />
@@ -117,6 +117,7 @@
           <Property Name="annualIncome" Type="money" />
           <Property Name="birthdate" Type="date" />
           <Property Name="createdOn" Type="date" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_BidItem_Bids">
           <End Role="BidItem" Type="Self.BidItem" Multiplicity="1" />
@@ -289,8 +290,7 @@
             <End Role="Sales" EntitySet="Sales" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="zaardCurrentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -426,6 +426,7 @@
           <NavigationProperty Name="paymentInfoes" Relationship="Self.FK_paymentInfo_Users" FromRole="Users" ToRole="paymentInfo" />
           <NavigationProperty Name="Reviews" Relationship="Self.FK_Users_Review" FromRole="Users" ToRole="Review" />
           <NavigationProperty Name="Sales" Relationship="Self.FK_Users_Sales" FromRole="Users" ToRole="Sales" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="FK_Users_address">
           <End Role="Users" Type="Self.User" Multiplicity="1" />
@@ -716,6 +717,7 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="zaardCurrentModel.User">
               <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="userID" ColumnName="userID" />
                 <ScalarProperty Name="password" ColumnName="password" />
                 <ScalarProperty Name="gender" ColumnName="gender" />

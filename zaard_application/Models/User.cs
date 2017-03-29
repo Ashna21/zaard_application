@@ -32,6 +32,7 @@ namespace zaard_application.Models
         public Nullable<decimal> annualIncome { get; set; }
         public Nullable<System.DateTime> birthdate { get; set; }
         public Nullable<System.DateTime> createdOn { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<address> addresses { get; set; }

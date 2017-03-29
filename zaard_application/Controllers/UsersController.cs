@@ -24,12 +24,13 @@ namespace zaard_application.Controllers
         {
             var query = (from u in db.Users where u.name == user.name select u).FirstOrDefault();
 
-            if (db.Users.Any(x => x.name == user.name && x.password == user.password))
+            if (db.Users.Any(x => x.email == user.email && x.password == user.password))
             {
                 String usr = user.name;
                 Session["id"] = user.userID;
                 Session["name"] = usr;
-                return View("Welcome");
+                //return View("Welcome");
+                return RedirectToAction("Index", "Home");
             }
             else
                 return View("Login");
@@ -60,8 +61,9 @@ namespace zaard_application.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "password,gender,name,annualIncome,birthdate")] User user)
+        public ActionResult Create([Bind(Include = "email, password,gender,name,annualIncome,birthdate")] User user)
         {
+           
             user.createdOn = DateTime.Now;
             Random rand = new Random();
             user.userID = rand.Next();
