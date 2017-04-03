@@ -9,7 +9,7 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -27,15 +27,42 @@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
+       
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row row-offcanvas row-offcanvas-right">
+
+            <div class="col-xs-12 col-sm-9 col-sm-push-3">
+                <div class="container body-content">
+                     @RenderBody()
+                 <hr />
+                    <footer>
+                         <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                    </footer>
+                </div>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-sm-pull-9 sidebar-offcanvas" id="sidebar">
+            <div class="list-group">
+                <a href="#" class="list-group-item active">Sidebar</a>
+                <a href="#" class="list-group-item">Books</a>
+                <a href="#" class="list-group-item">Movies</a>
+                <a href="#" class="list-group-item">Video Games</a>
+                <a href="#" class="list-group-item">Fiction</a>
+                <a href="#" class="list-group-item">Non Fiction</a>
+                <a href="#" class="list-group-item">Autobiography</a>
+            </div>
+        </div>
         </div>
     </div>
-    <div class="container body-content">
+    @*<div class="container body-content">
         @RenderBody()
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
-    </div>
+    </div>*@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
