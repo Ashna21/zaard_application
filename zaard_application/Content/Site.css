@@ -22,3 +22,19 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#sidebar{
+    width:inherit;
+    min-width: 220px;
+    max-width: 220px;
+    background-color: #f5f5f5;
+    float: left;
+    height: 100%;
+    overflow -y: auto;
+    overflow -x: hidden;
+}
+
+#main {
+    height: 100%;
+    overflow:auto;
+}
