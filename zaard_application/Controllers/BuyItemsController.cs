@@ -23,9 +23,23 @@ namespace zaard_application.Controllers
 
         public ActionResult BookDetails()
         {
-            string itemTYPE = "books";
-            List<BuyItem> books = (from b in db.BuyItems where b.itemType == itemTYPE select b).ToList() ;
-            return View(books);
+            string itemTYPE = "Book";
+            List<BuyItem> Book = (from b in db.BuyItems where b.itemType == itemTYPE select b).ToList() ;
+            return View(Book);
+        }
+
+        public ActionResult GameDetails()
+        {
+            string itemTYPE = "Game";
+            List<BuyItem> Game = (from b in db.BuyItems where b.itemType == itemTYPE select b).ToList();
+            return View(Game);
+        }
+
+        public ActionResult MovieDetails()
+        {
+            string itemTYPE = "Movie";
+            List<BuyItem> Movie = (from b in db.BuyItems where b.itemType == itemTYPE select b).ToList();
+            return View(Movie);
         }
 
         // GET: BuyItems/Details/5

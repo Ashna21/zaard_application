@@ -1,0 +1,167 @@
+﻿
+@model IEnumerable<zaard_application.Models.BuyItem>
+
+@{
+    ViewBag.Title = "MovieDetails";
+}
+
+<h2>Movie Details</h2>
+                
+
+@*@{
+    ViewBag.Title = "Details";
+}*@
+
+@*<h2>Details</h2>*@
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.itemName);
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price);
+        </th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.itemName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+
+        </tr>
+
+    }
+</table>
+
+@*<div>
+        <h4>BuyItem</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.stock)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.stock)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.released)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.released)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.genre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.genre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.fiction)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.fiction)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.minAge)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.minAge)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemLink)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemLink)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemLocation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemLocation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.isDigital)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.isDigital)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.image)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.image)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Supplier.supplierPhone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Supplier.supplierPhone)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.buyItemID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
+
+
+
+
