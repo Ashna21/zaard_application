@@ -8,12 +8,13 @@ using System.Web;
 using System.Web.Mvc;
 using zaard_application.Models;
 
-namespace zaard_application.Controllers
-{
-    public class BuyItemsController : Controller
-    {
-        private zaardCurrentEntities db = new zaardCurrentEntities();
+namespace zaard_application.Controllers {
 
+
+    public class BuyItemsController : Controller {
+        //private zaardCurrentEntities db = new zaardCurrentEntities();
+        private zaardNetworkEntities db = new zaardNetworkEntities();
+ 
         // GET: BuyItems
         public ActionResult Index()
         {

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="74cf9fa740d64aa5810118d46532b571" Name="Diagram1">
+        <EntityTypeShape EntityType="zaardModel.address" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="zaardModel.BidItem" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="zaardModel.Bid" Width="1.5" PointX="5.25" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zaardModel.BuyItem" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="zaardModel.paymentInfo" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="zaardModel.Review" Width="1.5" PointX="6" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="zaardModel.Sale" Width="1.5" PointX="6" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="zaardModel.Supplier" Width="1.5" PointX="1.5" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="zaardModel.User" Width="1.5" PointX="0.75" PointY="10" IsExpanded="true" />
+        <AssociationConnector Association="zaardModel.FK_Users_address" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_BidItem_Bids" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_Users_BidItem" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_Users_Bids" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_BuyItem_Review" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_Supplier_BuyItem" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_paymentInfo_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_Users_Review" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_Supplier_Sales" ManuallyRouted="false" />
+        <AssociationConnector Association="zaardModel.FK_Users_Sales" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
