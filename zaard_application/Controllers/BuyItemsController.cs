@@ -42,6 +42,41 @@ namespace zaard_application.Controllers
             return View(Movie);
         }
 
+        public ActionResult moreInfo(int buyItemId)
+        {
+            BuyItem selectedItem = (from b in db.BuyItems where b.buyItemID == buyItemId select b).FirstOrDefault();
+            return View(selectedItem);
+           
+        }
+
+        public ActionResult addAddressPage()
+        {
+            return View();
+        }
+
+        public ActionResult AddAddress(address address, int userID)
+        {
+
+           address newAddress = new address();
+           int userIdFromAddress = (from u in db.Users where u.userID == userID select u.userID).FirstOrDefault();
+           string emailFromAddress = (from u in db.Users where u.userID == userID select u.email).FirstOrDefault();
+
+            newAddress.street = address.street;
+            newAddress.city = address.city;
+            newAddress.state = address.state;
+            newAddress.zipcode = address.zipcode;
+            newAddress.UserID = userIdFromAddress;
+            newAddress.email = emailFromAddress;
+
+            Random rand = new Random();
+            address.addressID = rand.Next();
+           // address.UserID = userIdFromAddress;
+           // address.email = emailFromAddress;
+            db.addresses.Add(newAddress);
+            db.SaveChanges();
+            return RedirectToAction("BookDetails");
+        }
+
         // GET: BuyItems/Details/5
         //public ActionResult Details(int? id)
         //{

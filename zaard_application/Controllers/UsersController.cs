@@ -28,7 +28,7 @@ namespace zaard_application.Controllers
             {
                 String usr = user.name;
                 Session["id"] = user.userID;
-                Session["name"] = usr;
+                Session["email"] = user.email;
                 //return View("Welcome");
                 return RedirectToAction("Index", "Home");
             }

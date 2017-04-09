@@ -1,0 +1,87 @@
+﻿@model zaard_application.Models.BuyItem
+    @{
+        ViewBag.Title = "purchase";
+    }
+
+<h2>CheckOut Page</h2>
+<div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.itemName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.released)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.released)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.genre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.genre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.minAge)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.minAge)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemLink)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemLink)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.image)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.image)
+            </dd>
+
+        </dl>
+    <a class="btn btn-success" href="~/BuyItems/addAddressPage">Buy Item &raquo;</a>
+    </div>
+    
+       
+

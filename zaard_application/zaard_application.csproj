@@ -343,6 +343,8 @@
     <Content Include="Views\BuyItems\Index.cshtml" />
     <Content Include="Views\BuyItems\GameDetails.cshtml" />
     <Content Include="Views\BuyItems\MovieDetails.cshtml" />
+    <Content Include="Views\BuyItems\moreInfo.cshtml" />
+    <Content Include="Views\BuyItems\addAddressPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

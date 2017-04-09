@@ -4,7 +4,7 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Book Details</h2>
 
 <table class="table">
     <tr>
@@ -13,6 +13,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.price); 
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image)
         </th>
         
     </tr>
@@ -25,7 +28,14 @@
             <td>
                 @Html.DisplayFor(modelItem => item.price)
             </td>
+            @*<td>
+                @Html.DisplayFor(model => model.image)
 
+            </td>*@
+            <td>
+                @Html.ActionLink("More Information", "moreInfo", new { buyItemId = item.buyItemID })
+            </td>
+            
         </tr>
         
     }
@@ -129,14 +139,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.isDigital)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.image)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.image)
         </dd>
 
         <dt>
