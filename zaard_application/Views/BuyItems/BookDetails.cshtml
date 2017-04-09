@@ -9,13 +9,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.itemName);
+            @*@Html.DisplayNameFor(model => model.itemName)*@
+            <h3>Item Name</h3>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.price); 
+            @*@Html.DisplayNameFor(model => model.price)*@ 
+            <h3>Item Price</h3>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.image)
+            @*@Html.DisplayNameFor(model => model.image)*@
+            <h3>Item</h3>
         </th>
         
     </tr>
@@ -26,7 +29,7 @@
                 @Html.DisplayFor(modelItem => item.itemName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.price)
+                $ @Html.DisplayFor(modelItem => item.price)
             </td>
             @*<td>
                 @Html.DisplayFor(model => model.image)

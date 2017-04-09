@@ -1,0 +1,41 @@
+﻿@model zaard_application.Models.addressAndPaymentViewModel
+@{
+    ViewBag.Title = "UserDetailsConfirmation";
+}
+
+<h2>UserDetailsConfirmation</h2>
+
+<table class="table">
+    <tr>
+        <th>
+           <p> Shipping/Billing Address </p>
+        </th>
+        <th>
+           <p> Payment Information </p>
+        </th>
+
+    </tr>
+        <tr>
+            <td>
+               <span style="white-space: pre-line">@Html.DisplayFor(modelItem => modelItem.AddressDetails.street)</span> 
+                
+                <span style="white-space: pre-line">@Html.DisplayFor(modelItem => modelItem.AddressDetails.city)</span> 
+                <span style="white-space: pre-line">@Html.DisplayFor(modelItem => modelItem.AddressDetails.state)</span> 
+                <span style="white-space: pre-line">@Html.DisplayFor(modelItem => modelItem.AddressDetails.zipcode)</span> 
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => modelItem.PaymentInfoDetails.cardNum)
+                @Html.DisplayFor(modelItem => modelItem.PaymentInfoDetails.cardType)
+                @Html.DisplayFor(modelItem => modelItem.PaymentInfoDetails.expiration)
+            </td>
+            <td>
+                
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+
+    
+</table>

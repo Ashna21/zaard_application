@@ -54,29 +54,70 @@ namespace zaard_application.Controllers
             return View();
         }
 
-        public ActionResult AddAddress(address address, int userID)
+        public ActionResult AddAddress(address address, string useremail)
         {
 
            address newAddress = new address();
-           int userIdFromAddress = (from u in db.Users where u.userID == userID select u.userID).FirstOrDefault();
-           string emailFromAddress = (from u in db.Users where u.userID == userID select u.email).FirstOrDefault();
+           int userIdFromAddress = (from u in db.Users where u.email == useremail select u.userID).FirstOrDefault();
+            //string emailFromAddress = (from u in db.Users where u.email == useremail select u.email).FirstOrDefault();
 
             newAddress.street = address.street;
             newAddress.city = address.city;
             newAddress.state = address.state;
             newAddress.zipcode = address.zipcode;
             newAddress.UserID = userIdFromAddress;
-            newAddress.email = emailFromAddress;
+            newAddress.email = useremail;
 
             Random rand = new Random();
-            address.addressID = rand.Next();
+            newAddress.addressID = rand.Next();
            // address.UserID = userIdFromAddress;
            // address.email = emailFromAddress;
             db.addresses.Add(newAddress);
             db.SaveChanges();
-            return RedirectToAction("BookDetails");
+            return RedirectToAction("AddPaymentPage");
         }
 
+        public ActionResult AddPaymentPage()
+        {
+            return View();
+        }
+
+        public ActionResult AddPayment(paymentInfo payment, string useremail)
+        {
+            paymentInfo newPayment = new paymentInfo();
+            int userIdFromPayment = (from u in db.Users where u.email == useremail select u.userID).FirstOrDefault();
+            newPayment.cardNum = payment.cardNum;
+            newPayment.cardType = payment.cardType;
+            newPayment.cvv = payment.cvv;
+            newPayment.expiration = payment.expiration;
+            newPayment.timeOfPurchase = DateTime.Now;
+            newPayment.nameOnCard = payment.nameOnCard;
+            newPayment.userID = userIdFromPayment;
+
+            Random rand = new Random();
+            newPayment.paymentID = rand.Next();
+
+            db.paymentInfoes.Add(newPayment);
+            db.SaveChanges();
+            return RedirectToAction("UserDetailsConfirmation", new { email = useremail });
+        }
+
+
+        //public class addressAndPaymentInfo
+        //{
+        //    public address AddressDetails { get; set; }
+        //    public paymentInfo PaymentInfoDetails { get; set; }
+        //}
+
+        public ActionResult UserDetailsConfirmation(string email)
+        {
+            int userId = (from u in db.Users where u.email == email select u.userID).FirstOrDefault();
+            var userAddress = (from a in db.addresses where a.UserID == userId select a).FirstOrDefault();
+            var userPaymentInfo = (from p in db.paymentInfoes where p.userID == userId select p).FirstOrDefault();
+
+            var model = new addressAndPaymentViewModel { AddressDetails = userAddress, PaymentInfoDetails = userPaymentInfo };
+            return View(model);
+        }
         // GET: BuyItems/Details/5
         //public ActionResult Details(int? id)
         //{

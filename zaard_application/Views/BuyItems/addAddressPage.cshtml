@@ -5,7 +5,7 @@
 
 <h2>purchasePage</h2>
 
-@using (Html.BeginForm("AddAddress", "BuyItems", new { userID = Session["id"] }, FormMethod.Post, new { @class = "form" }))
+@using (Html.BeginForm("AddAddress", "BuyItems", new { useremail = Session["email"] }, FormMethod.Post, new { @class = "form" }))
 {
     @Html.AntiForgeryToken()
 
