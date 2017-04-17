@@ -1,0 +1,53 @@
+﻿@model IEnumerable<zaard_application.Models.Review>
+@{
+    ViewBag.Title = "Review";
+}
+
+<h2>Review</h2>
+@*<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.reviewText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.starValue)
+        </dd>
+    </dl>
+</div>*@
+
+<table class="table">
+    <tr>
+        <th>
+            @*@Html.DisplayNameFor(model => model.itemName)*@
+            <h3>Review Text</h3>
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.price)*@
+            <h3>Star Value</h3>
+        </th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.reviewText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.starValue)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(model => model.image)
+
+                </td>*@
+
+        </tr>
+
+    }
+</table>
+
+@*<a class="btn btn-success" href="~/BuyItems/moreInfo?buyItemId=item.buyItemID">Back &raquo;</a>*@
+<a class="btn btn-success" href="javascript:void(0);" onclick="history.go(-1);">Back to Product &raquo;</a>
+

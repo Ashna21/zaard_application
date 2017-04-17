@@ -380,6 +380,8 @@
     <Content Include="Views\BuyItems\addAddressPage.cshtml" />
     <Content Include="Views\BuyItems\AddPaymentPage.cshtml" />
     <Content Include="Views\BuyItems\UserDetailsConfirmation.cshtml" />
+    <Content Include="Views\BuyItems\Review.cshtml" />
+    <Content Include="Views\BuyItems\PaymentConfirmedPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

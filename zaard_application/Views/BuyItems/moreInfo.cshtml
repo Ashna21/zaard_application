@@ -79,6 +79,10 @@
                 @Html.DisplayFor(model => model.image)
             </dd>
 
+            <dd>
+                @Html.ActionLink("Read Reviews!", "Review", new { buyItemId = Model.buyItemID })
+            </dd>
+
         </dl>
     <a class="btn btn-success" href="~/BuyItems/addAddressPage">Buy Item &raquo;</a>
     </div>

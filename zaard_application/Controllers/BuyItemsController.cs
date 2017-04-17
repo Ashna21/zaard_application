@@ -4,9 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Web;
+using System.Web.Mail;
 using System.Web.Mvc;
 using zaard_application.Models;
+
 
 namespace zaard_application.Controllers {
 
@@ -14,7 +17,8 @@ namespace zaard_application.Controllers {
     public class BuyItemsController : Controller {
         //private zaardCurrentEntities db = new zaardCurrentEntities();
         private zaardNetworkEntities db = new zaardNetworkEntities();
- 
+        string userEmail = "";
+        
         // GET: BuyItems
         public ActionResult Index()
         {
@@ -49,6 +53,20 @@ namespace zaard_application.Controllers {
             return View(selectedItem);
            
         }
+
+        public ActionResult Review(int buyItemId)
+        {
+            List<Review> Review = (from b in db.Reviews where b.buyItemID == buyItemId select b).ToList();
+            //BuyItem selectedItem = (from b in db.BuyItems where b.buyItemID == buyItemId select b).FirstOrDefault();
+            return View(Review);
+
+        }
+
+        //public ActionResult Review1(int buyItemId)
+        //{
+        //    return RedirectToAction("moreInfo", buyItemId);
+
+        //}
 
         public ActionResult addAddressPage()
         {
@@ -112,12 +130,35 @@ namespace zaard_application.Controllers {
 
         public ActionResult UserDetailsConfirmation(string email)
         {
+            userEmail = email;
             int userId = (from u in db.Users where u.email == email select u.userID).FirstOrDefault();
             var userAddress = (from a in db.addresses where a.UserID == userId select a).FirstOrDefault();
             var userPaymentInfo = (from p in db.paymentInfoes where p.userID == userId select p).FirstOrDefault();
 
             var model = new addressAndPaymentViewModel { AddressDetails = userAddress, PaymentInfoDetails = userPaymentInfo };
             return View(model);
+        }
+
+        public ActionResult PaymentConfirmedPage()
+        {
+            User selectedUser = (from b in db.Users where b.email == userEmail select b).FirstOrDefault();
+
+            const string accountName = "gupta.shambhavi27@gmail.com";            // # Gmail account name
+            const string password = "Ganeshji27";                                // # Gmail account password
+            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+
+            smtp.Credentials = new System.Net.NetworkCredential(accountName, password);
+
+            mail.From = new MailAddress("gupta.shambhavi27@gmail.com"); // # Remember to change here with the mail you got
+            mail.To.Add("shambhavi123@yahoo.co.in");                                  // # Email adress to send activation mail
+            mail.Subject = "Thanks for shopping!";
+            mail.Body = "Here are the details related to your purchase!";   // # You will need to change here with HTML containing a link (which contains a generated activation code)
+            //mail.IsHtml = true;
+            
+            smtp.Send(mail);
+
+            return View(selectedUser);
         }
         // GET: BuyItems/Details/5
         //public ActionResult Details(int? id)
