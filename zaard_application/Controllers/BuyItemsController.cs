@@ -9,17 +9,25 @@ using System.Web;
 using System.Web.Mail;
 using System.Web.Mvc;
 using zaard_application.Models;
+using System.Drawing.Imaging;
 
 
 namespace zaard_application.Controllers {
 
 
     public class BuyItemsController : Controller {
-        //private zaardCurrentEntities db = new zaardCurrentEntities();
-        private zaardNetworkEntities db = new zaardNetworkEntities();
-        string userEmail = "";
-        
+        private zaardCurrentEntities db = new zaardCurrentEntities();
+        //private zaardNetworkEntities db = new zaardNetworkEntities();
+        private string userEmail = "";
+
         // GET: BuyItems
+        private PhotoModel db1 = new PhotoModel();
+
+        //public ActionResult Index1()
+        //{
+        //    return View(db1.Photos.ToList());
+        //}
+
         public ActionResult Index()
         {
             var buyItems = db.BuyItems.Include(b => b.Supplier);
@@ -60,6 +68,16 @@ namespace zaard_application.Controllers {
             //BuyItem selectedItem = (from b in db.BuyItems where b.buyItemID == buyItemId select b).FirstOrDefault();
             return View(Review);
 
+        }
+
+        public ActionResult selection_genre(string given_itemType, string given_genre)
+        {
+
+            List<BuyItem> item1 = (from b in db.BuyItems where b.itemType == given_itemType select b).ToList();
+            List<BuyItem> item2 = (from b in db.BuyItems where b.genre == given_genre select b).ToList();
+            List<BuyItem> item = item1.Intersect(item2).ToList();
+
+            return View(item);
         }
 
         //public ActionResult Review1(int buyItemId)
@@ -139,21 +157,23 @@ namespace zaard_application.Controllers {
             return View(model);
         }
 
-        public ActionResult PaymentConfirmedPage()
+        public ActionResult PaymentConfirmedPage(string userEmail)
         {
             User selectedUser = (from b in db.Users where b.email == userEmail select b).FirstOrDefault();
 
-            const string accountName = "gupta.shambhavi27@gmail.com";            // # Gmail account name
-            const string password = "Ganeshji27";                                // # Gmail account password
+            const string accountName = "zaard.customerService@gmail.com";            // # Gmail account name
+            const string password = "Pennsylvania";                                // # Gmail account password
             System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
             SmtpClient smtp = new SmtpClient("smtp.gmail.com");
 
             smtp.Credentials = new System.Net.NetworkCredential(accountName, password);
 
-            mail.From = new MailAddress("gupta.shambhavi27@gmail.com"); // # Remember to change here with the mail you got
-            mail.To.Add("shambhavi123@yahoo.co.in");                                  // # Email adress to send activation mail
-            mail.Subject = "Thanks for shopping!";
-            mail.Body = "Here are the details related to your purchase!";   // # You will need to change here with HTML containing a link (which contains a generated activation code)
+            mail.From = new MailAddress("zaard.customerService@gmail.com"); // # Remember to change here with the mail you got
+            mail.To.Add(userEmail);                         // # Email adress to send activation mail
+            mail.Subject = "Thanks for shopping with Zaard!";
+            mail.Body = "Dear "+ selectedUser.name + ",\n"+ "\n"+
+                "We appreciate your business and hope you are satisfied with our products and services!" + "\n"+
+                "Please contact our customer service at zaard.customerservice@gmail.com for any assistance.";
             //mail.IsHtml = true;
             
             smtp.Send(mail);

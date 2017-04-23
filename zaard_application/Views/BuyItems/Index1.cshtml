@@ -1,0 +1,16 @@
+﻿@model IEnumerable<zaard_application.Models.PhotoModel>
+
+<table>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @*<img src="@Url.Content(item.ImageFile)" alt="" />*@
+                <img src="~/Content/images/backgroundimage.png" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Caption)
+            </td>
+        </tr>
+    }
+</table>

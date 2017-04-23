@@ -34,7 +34,7 @@
             </td>
 
             <td>
-                @Html.ActionLink("Confirm Payment", "PaymentConfirmedPage")
+                @Html.ActionLink("Confirm Payment", "PaymentConfirmedPage", new { useremail = Session["email"] })
             </td>
         </tr>
 

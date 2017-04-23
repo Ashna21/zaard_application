@@ -3,7 +3,7 @@
         ViewBag.Title = "purchase";
     }
 
-<h2>CheckOut Page</h2>
+<h2>Product Information</h2>
 <div>
         <hr />
         <dl class="dl-horizontal">
@@ -81,6 +81,14 @@
 
             <dd>
                 @Html.ActionLink("Read Reviews!", "Review", new { buyItemId = Model.buyItemID })
+            </dd>
+
+            <dd> 
+               <label>Write a Review</label>
+                @*@model zaard_application.Models.Review*@
+               @Html.TextBoxFor(model => model.itemLocation) 
+               @*<a class="btn btn-success" href="~/BuyItems/Review">Submit &raquo;</a>*@
+                <a class="btn btn-success" href="javascript:void(0);" onclick="history.go(0);">Submit &raquo;</a>
             </dd>
 
         </dl>
