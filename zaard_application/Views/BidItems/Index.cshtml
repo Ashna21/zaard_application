@@ -1,0 +1,99 @@
+﻿@model IEnumerable<zaard_application.Models.BidItem>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.itemCategory)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemLink)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemLocation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.isDigital)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.auctionStatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.auctionStart)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.auctionEnd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.image)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Bid.bidItemID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.password)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemCategory)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemLink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemLocation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.itemDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isDigital)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.auctionStatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.auctionStart)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.auctionEnd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.image)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Bid.bidItemID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.password)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.bidItemID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.bidItemID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.bidItemID })
+        </td>
+    </tr>
+}
+
+</table>

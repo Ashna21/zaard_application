@@ -1,0 +1,114 @@
+﻿@model zaard_application.Models.BidItem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>BidItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.itemCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemCategory)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.itemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.itemLink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemLink)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.itemLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.itemDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isDigital)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isDigital)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.auctionStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.auctionStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.auctionStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.auctionStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.auctionEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.auctionEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.image)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bid.bidItemID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bid.bidItemID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.password)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.bidItemID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

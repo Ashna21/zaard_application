@@ -1,0 +1,79 @@
+﻿@model zaard_application.Models.BidItem
+@{
+    ViewBag.Title = "purchase";
+}
+
+<h2>Product Information</h2>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.itemName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.itemCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemCategory)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.auctionStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.auctionStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.auctionStart)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.auctionStart)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.auctionEnd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.auctionEnd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.itemDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.itemDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.image)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.image)
+        </dd>
+
+        <dd>
+            @Html.ActionLink("Read Reviews!", "Review", new { bidItemId = Model.bidItemID })
+        </dd>
+        <dd>
+            @Html.ActionLink("Write a Review!", "writeReview", new { bidItemId = Model.bidItemID })
+        </dd>
+
+
+
+    </dl>
+    <a class="btn btn-success" href="~/BuyItems/addAddressPage">Buy Item &raquo;</a>
+</div>
+
+
+

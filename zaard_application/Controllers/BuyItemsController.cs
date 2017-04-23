@@ -69,6 +69,31 @@ namespace zaard_application.Controllers {
             return View(Review);
 
         }
+        public ActionResult writeReview(int buyItemId)
+        {
+            BuyItem selectedItem = (from b in db.BuyItems where b.buyItemID == buyItemId select b).FirstOrDefault();
+            Session["itemName"] = selectedItem.itemName;
+            Session["itemId"] = selectedItem.buyItemID;
+            return View();
+        }
+
+        public ActionResult submitReview(Review review, int reviewItemID, string userEmail)
+        {
+            Review newReview = new Review();
+            User reviewingUser = (from u in db.Users where u.email == userEmail select u).FirstOrDefault();
+            newReview.buyItemID = reviewItemID;
+            newReview.reviewText = review.reviewText;
+            newReview.starValue = review.starValue;
+            newReview.userID = reviewingUser.userID;
+            newReview.date = DateTime.Now;
+            Random rand = new Random();
+            newReview.reviewID = rand.Next();
+
+            db.Reviews.Add(newReview);
+            db.SaveChanges();
+            return RedirectToAction("Review", new { buyItemId = reviewItemID });
+
+        }
 
         public ActionResult selection_genre(string given_itemType, string given_genre)
         {
@@ -94,9 +119,10 @@ namespace zaard_application.Controllers {
         public ActionResult AddAddress(address address, string useremail)
         {
 
-           address newAddress = new address();
-           int userIdFromAddress = (from u in db.Users where u.email == useremail select u.userID).FirstOrDefault();
-            //string emailFromAddress = (from u in db.Users where u.email == useremail select u.email).FirstOrDefault();
+            address newAddress = new address();
+            int userIdFromAddress = (from u in db.Users where u.email == useremail select u.userID).FirstOrDefault();
+            Session["userIdInItems"] = userIdFromAddress;
+               //string emailFromAddress = (from u in db.Users where u.email == useremail select u.email).FirstOrDefault();
 
             newAddress.street = address.street;
             newAddress.city = address.city;

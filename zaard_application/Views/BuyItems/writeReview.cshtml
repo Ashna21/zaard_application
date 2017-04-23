@@ -1,0 +1,21 @@
+﻿@model zaard_application.Models.Review
+@{
+    ViewBag.Title = "writeReview";
+}
+
+<h2>Write a Review for @Session["itemName"] itemId is  @Session["itemId"] user is @Session["email"]</h2>
+@using (Html.BeginForm("submitReview", "BuyItems", new { reviewItemID = Session["itemId"], userEmail = Session["email"] },FormMethod.Post, new { @class = "form" }))
+{
+
+    <div calls="form-group">
+        @Html.LabelFor(m => m.reviewText)
+        @Html.TextBoxFor(m => m.reviewText, new { @class = "form-control" })
+    </div>
+
+
+    <div calls="form-group">
+        @Html.LabelFor(m => m.starValue)
+        @Html.TextBoxFor(m => m.starValue, new { @class = "form-control" })
+    </div>
+    <input type="submit" class="btn btn-primary" value="Submit" />
+}
