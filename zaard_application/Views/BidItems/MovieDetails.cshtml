@@ -1,0 +1,158 @@
+﻿@model IEnumerable<zaard_application.Models.BidItem>
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Bid Movie Details</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @*@Html.DisplayNameFor(model => model.itemName)*@
+            <h3>Item Name</h3>
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.image)*@
+            <h3>Item</h3>
+        </th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.itemName)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(model => model.image)
+
+                </td>*@
+            <td>
+                @Html.ActionLink("More Information", "moreInfo", new { bidItemId = item.bidItemID })
+            </td>
+            @*<td>
+                    @Html.ActionLink("Review", "Review", new { buyItemId = item.buyItemID })
+                </td>*@
+
+        </tr>
+
+    }
+</table>
+
+<a class="btn btn-success" href="javascript:void(0);" onclick="history.go(-1);">Back &raquo;</a>
+
+@*<div>
+        <h4>BuyItem</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.stock)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.stock)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.price)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.price)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.released)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.released)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemType)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemType)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.genre)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.genre)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.fiction)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.fiction)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.minAge)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.minAge)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemLink)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemLink)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemLocation)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemLocation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.itemDescription)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.itemDescription)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.isDigital)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.isDigital)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Supplier.supplierPhone)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Supplier.supplierPhone)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.buyItemID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@

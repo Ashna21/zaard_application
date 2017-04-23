@@ -16,8 +16,8 @@ namespace zaard_application.Controllers {
 
 
     public class BuyItemsController : Controller {
-        private zaardCurrentEntities db = new zaardCurrentEntities();
-        //private zaardNetworkEntities db = new zaardNetworkEntities();
+        //private zaardCurrentEntities db = new zaardCurrentEntities();
+        private zaardNetworkEntities db = new zaardNetworkEntities();
         private string userEmail = "";
 
         // GET: BuyItems

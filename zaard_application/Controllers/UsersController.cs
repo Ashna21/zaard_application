@@ -12,8 +12,8 @@ namespace zaard_application.Controllers
 {
     public class UsersController : Controller
     {
-        private zaardCurrentEntities db = new zaardCurrentEntities();
-        //private zaardNetworkEntities db = new zaardNetworkEntities();
+        //private zaardCurrentEntities db = new zaardCurrentEntities();
+        private zaardNetworkEntities db = new zaardNetworkEntities();
 
         // GET: Users
         public ActionResult Index()

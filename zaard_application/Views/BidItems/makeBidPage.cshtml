@@ -1,0 +1,16 @@
+﻿@model zaard_application.Models.Bid
+@{
+    ViewBag.Title = "makeBidPage";
+}
+
+<h2>Make a bid for @Session["bidItemName"] itemId is  @Session["bidItemId"] user is @Session["email"]</h2>
+@using (Html.BeginForm("submitBid", "BidItems", new { bidItemID = Session["bidItemId"], userEmail = Session["email"] }, FormMethod.Post, new { @class = "form" }))
+{
+
+    <div calls="form-group">
+        @Html.LabelFor(m => m.bidAmount)
+        @Html.TextBoxFor(m => m.bidAmount, new { @class = "form-control" })
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Submit" />
+}

@@ -12,7 +12,8 @@ namespace zaard_application.Controllers
 {
     public class BidItemsController : Controller
     {
-        private zaardCurrentEntities db = new zaardCurrentEntities();
+        private zaardNetworkEntities db = new zaardNetworkEntities();
+        //private zaardCurrentEntities db = new zaardCurrentEntities();
 
         // GET: BidItems
         public ActionResult Index()
@@ -24,7 +25,7 @@ namespace zaard_application.Controllers
         public ActionResult BookDetails()
         {
             string itemTYPE = "Book";
-            List<BidItem> Book = (from b in db.BidItems where b.itemName == itemTYPE select b).ToList();
+            List<BidItem> Book = (from b in db.BidItems where b.itemCategory == itemTYPE select b).ToList();
             if (Book == null)
             {
                 RedirectToAction("Index", "Home");
@@ -47,9 +48,47 @@ namespace zaard_application.Controllers
         }
         public ActionResult moreInfo(int bidItemId)
         {
+            int maxBid = (from b in db.Bids where b.bidItemID == bidItemId select b.bidAmount).Max();
+            if (maxBid == 0)
+            {
+                Session["maxBid"] = "No Bid has been made yet";
+            }
+            else
+            {
+                Session["maxBid"] = maxBid;
+            }
+            Session["bidItemId"] = bidItemId;
             BidItem selectedItem = (from b in db.BidItems where b.bidItemID == bidItemId select b).FirstOrDefault();
+            Session["bidItemName"] = selectedItem.itemName;
             return View(selectedItem);
 
+        }
+
+        public ActionResult makeBidPage ()
+        {
+
+            return View();
+        }
+
+        public ActionResult submitBid (Bid bid, int bidItemID, string userEmail)
+        {
+            Bid newBid = new Models.Bid();
+            newBid.bidAmount = bid.bidAmount;
+            newBid.bidTime = DateTime.Now;
+            User bidingUser = (from u in db.Users where u.email == userEmail select u).FirstOrDefault();
+            newBid.userID = bidingUser.userID;
+            newBid.bidItemID = bidItemID;
+            Random rand = new Random();
+            newBid.bidID = rand.Next();
+            BidItem bidItem = (from u in db.BidItems where u.bidItemID == bidItemID select u).FirstOrDefault();
+            int currentMax = (int) Session["maxBid"];
+            if (bid.bidAmount < currentMax || newBid.bidTime > bidItem.auctionEnd)
+            {
+                RedirectToAction("bidErrorPage");
+            }
+            db.Bids.Add(newBid);
+            db.SaveChanges();
+            return RedirectToAction("moreinfo", new { bidItemId = bidItemID });
         }
 
         // GET: BidItems/Details/5
