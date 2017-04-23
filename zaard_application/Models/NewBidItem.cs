@@ -12,14 +12,18 @@ namespace zaard_application.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Bid
+    public partial class NewBidItem
     {
-        public int bidAmount { get; set; }
-        public System.DateTime bidTime { get; set; }
-        public int userID { get; set; }
+        public string itemType { get; set; }
+        public string itemName { get; set; }
+        public string itemLink { get; set; }
+        public string itemLocation { get; set; }
+        public string itemDescription { get; set; }
+        public Nullable<bool> isDigital { get; set; }
         public int bidItemID { get; set; }
-        public int bidID { get; set; }
-    
-        public virtual User User { get; set; }
+        public Nullable<bool> auctionStatus { get; set; }
+        public Nullable<System.DateTime> auctionStart { get; set; }
+        public Nullable<System.DateTime> auctionEnd { get; set; }
+        public byte[] image { get; set; }
     }
 }

@@ -5,25 +5,24 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="d7891867ac6140b4b211cda7747bd84c" Name="Diagram1">
-        <EntityTypeShape EntityType="zaardCurrentModel.address" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zaardCurrentModel.BidItem" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="zaardCurrentModel.Bid" Width="1.5" PointX="5.25" PointY="9.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="zaardCurrentModel.BuyItem" Width="1.5" PointX="3.75" PointY="17.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="zaardCurrentModel.paymentInfo" Width="1.5" PointX="3" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="zaardCurrentModel.Review" Width="1.5" PointX="6" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="zaardCurrentModel.Sale" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="zaardCurrentModel.Supplier" Width="1.5" PointX="3.75" PointY="2.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="zaardCurrentModel.User" Width="1.5" PointX="0.75" PointY="8.5" IsExpanded="true" />
-        <AssociationConnector Association="zaardCurrentModel.FK_Users_address" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_BidItem_Bids" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_Users_BidItem" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_Users_Bids" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_BuyItem_Review" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_Supplier_BuyItem" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_paymentInfo_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_Users_Review" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_Supplier_Sales" ManuallyRouted="false" />
-        <AssociationConnector Association="zaardCurrentModel.FK_Users_Sales" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="zaardCurrentModel.address" Width="1.5" PointX="3" PointY="14.5" />
+        <EntityTypeShape EntityType="zaardCurrentModel.BidItem" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="zaardCurrentModel.Bid" Width="1.5" PointX="3" PointY="8.25" />
+        <EntityTypeShape EntityType="zaardCurrentModel.BuyItem" Width="1.5" PointX="0.75" PointY="12.25" />
+        <EntityTypeShape EntityType="zaardCurrentModel.NewBidItem" Width="1.5" PointX="2.75" PointY="0.75" />
+        <EntityTypeShape EntityType="zaardCurrentModel.paymentInfo" Width="1.5" PointX="3" PointY="17.75" />
+        <EntityTypeShape EntityType="zaardCurrentModel.Review" Width="1.5" PointX="3" PointY="11.125" />
+        <EntityTypeShape EntityType="zaardCurrentModel.Sale" Width="1.5" PointX="6" PointY="8.125" />
+        <EntityTypeShape EntityType="zaardCurrentModel.Supplier" Width="1.5" PointX="3.75" PointY="5.375" />
+        <EntityTypeShape EntityType="zaardCurrentModel.User" Width="1.5" PointX="0.75" PointY="7.625" />
+        <AssociationConnector Association="zaardCurrentModel.FK_Users_address" />
+        <AssociationConnector Association="zaardCurrentModel.FK_Users_Bids" />
+        <AssociationConnector Association="zaardCurrentModel.FK_BuyItem_Review" />
+        <AssociationConnector Association="zaardCurrentModel.FK_Supplier_BuyItem" />
+        <AssociationConnector Association="zaardCurrentModel.FK_paymentInfo_Users" />
+        <AssociationConnector Association="zaardCurrentModel.FK_Users_Review" />
+        <AssociationConnector Association="zaardCurrentModel.FK_Supplier_Sales" />
+        <AssociationConnector Association="zaardCurrentModel.FK_Users_Sales" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

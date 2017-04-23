@@ -21,27 +21,28 @@
           <Key>
             <PropertyRef Name="bidItemID" />
           </Key>
-          <Property Name="itemCategory" Type="nchar" MaxLength="10" />
+          <Property Name="itemCategory" Type="nchar" MaxLength="45" />
           <Property Name="itemName" Type="nchar" MaxLength="10" />
           <Property Name="itemLink" Type="nchar" MaxLength="10" />
           <Property Name="itemLocation" Type="nchar" MaxLength="10" />
           <Property Name="itemDescription" Type="nchar" MaxLength="10" />
-          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="isDigital" Type="bit" />
           <Property Name="bidItemID" Type="int" Nullable="false" />
           <Property Name="auctionStatus" Type="bit" />
           <Property Name="auctionStart" Type="datetime" />
           <Property Name="auctionEnd" Type="datetime" />
           <Property Name="image" Type="image" />
+          <Property Name="UserID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Bids">
           <Key>
-            <PropertyRef Name="bidItemID" />
+            <PropertyRef Name="bidID" />
           </Key>
           <Property Name="bidAmount" Type="int" Nullable="false" />
           <Property Name="bidTime" Type="datetime" Nullable="false" />
           <Property Name="userID" Type="int" Nullable="false" />
           <Property Name="bidItemID" Type="int" Nullable="false" />
+          <Property Name="bidID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BuyItem">
           <Key>
@@ -61,6 +62,22 @@
           <Property Name="itemDescription" Type="nchar" MaxLength="45" />
           <Property Name="supplierID" Type="int" Nullable="false" />
           <Property Name="isDigital" Type="bit" />
+          <Property Name="image" Type="image" />
+        </EntityType>
+        <EntityType Name="NewBidItem">
+          <Key>
+            <PropertyRef Name="bidItemID" />
+          </Key>
+          <Property Name="itemType" Type="nchar" MaxLength="45" />
+          <Property Name="itemName" Type="nchar" MaxLength="10" />
+          <Property Name="itemLink" Type="nchar" MaxLength="10" />
+          <Property Name="itemLocation" Type="nchar" MaxLength="10" />
+          <Property Name="itemDescription" Type="nchar" MaxLength="10" />
+          <Property Name="isDigital" Type="bit" />
+          <Property Name="bidItemID" Type="int" Nullable="false" />
+          <Property Name="auctionStatus" Type="bit" />
+          <Property Name="auctionStart" Type="datetime" />
+          <Property Name="auctionEnd" Type="datetime" />
           <Property Name="image" Type="image" />
         </EntityType>
         <EntityType Name="paymentInfo">
@@ -119,18 +136,6 @@
           <Property Name="createdOn" Type="date" />
           <Property Name="email" Type="varchar" MaxLength="50" />
         </EntityType>
-        <Association Name="FK_BidItem_Bids">
-          <End Role="BidItem" Type="Self.BidItem" Multiplicity="1" />
-          <End Role="Bids" Type="Self.Bids" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="BidItem">
-              <PropertyRef Name="bidItemID" />
-            </Principal>
-            <Dependent Role="Bids">
-              <PropertyRef Name="bidItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BuyItem_Review">
           <End Role="BuyItem" Type="Self.BuyItem" Multiplicity="1" />
           <End Role="Review" Type="Self.Review" Multiplicity="*" />
@@ -187,18 +192,6 @@
               <PropertyRef Name="userID" />
             </Principal>
             <Dependent Role="address">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Users_BidItem">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="BidItem" Type="Self.BidItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="userID" />
-            </Principal>
-            <Dependent Role="BidItem">
               <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -244,15 +237,12 @@
           <EntitySet Name="BidItem" EntityType="Self.BidItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bids" EntityType="Self.Bids" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BuyItem" EntityType="Self.BuyItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NewBidItem" EntityType="Self.NewBidItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="paymentInfo" EntityType="Self.paymentInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Review" EntityType="Self.Review" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sales" EntityType="Self.Sales" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_BidItem_Bids" Association="Self.FK_BidItem_Bids">
-            <End Role="BidItem" EntitySet="BidItem" />
-            <End Role="Bids" EntitySet="Bids" />
-          </AssociationSet>
           <AssociationSet Name="FK_BuyItem_Review" Association="Self.FK_BuyItem_Review">
             <End Role="BuyItem" EntitySet="BuyItem" />
             <End Role="Review" EntitySet="Review" />
@@ -273,10 +263,6 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="address" EntitySet="address" />
           </AssociationSet>
-          <AssociationSet Name="FK_Users_BidItem" Association="Self.FK_Users_BidItem">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="BidItem" EntitySet="BidItem" />
-          </AssociationSet>
           <AssociationSet Name="FK_Users_Bids" Association="Self.FK_Users_Bids">
             <End Role="Users" EntitySet="Users" />
             <End Role="Bids" EntitySet="Bids" />
@@ -294,56 +280,98 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="zaardCurrentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="zaardCurrentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="addresses" EntityType="zaardCurrentModel.address" />
+          <EntitySet Name="BidItems" EntityType="zaardCurrentModel.BidItem" />
+          <EntitySet Name="Bids" EntityType="zaardCurrentModel.Bid" />
+          <EntitySet Name="BuyItems" EntityType="zaardCurrentModel.BuyItem" />
+          <EntitySet Name="NewBidItems" EntityType="zaardCurrentModel.NewBidItem" />
+          <EntitySet Name="paymentInfoes" EntityType="zaardCurrentModel.paymentInfo" />
+          <EntitySet Name="Reviews" EntityType="zaardCurrentModel.Review" />
+          <EntitySet Name="Sales" EntityType="zaardCurrentModel.Sale" />
+          <EntitySet Name="Suppliers" EntityType="zaardCurrentModel.Supplier" />
+          <EntitySet Name="Users" EntityType="zaardCurrentModel.User" />
+          <AssociationSet Name="FK_Users_address" Association="zaardCurrentModel.FK_Users_address">
+            <End Role="User" EntitySet="Users" />
+            <End Role="address" EntitySet="addresses" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Bids" Association="zaardCurrentModel.FK_Users_Bids">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Bid" EntitySet="Bids" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BuyItem_Review" Association="zaardCurrentModel.FK_BuyItem_Review">
+            <End Role="BuyItem" EntitySet="BuyItems" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_BuyItem" Association="zaardCurrentModel.FK_Supplier_BuyItem">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="BuyItem" EntitySet="BuyItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_paymentInfo_Users" Association="zaardCurrentModel.FK_paymentInfo_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="paymentInfo" EntitySet="paymentInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Review" Association="zaardCurrentModel.FK_Users_Review">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Review" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Supplier_Sales" Association="zaardCurrentModel.FK_Supplier_Sales">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Sales" Association="zaardCurrentModel.FK_Users_Sales">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Sale" EntitySet="Sales" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="address">
           <Key>
             <PropertyRef Name="addressID" />
           </Key>
           <Property Name="zipcode" Type="Int32" Nullable="false" />
-          <Property Name="street" Type="String" MaxLength="45" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="city" Type="String" MaxLength="45" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="state" Type="String" MaxLength="45" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="street" Type="String" Nullable="false" MaxLength="45" FixedLength="true" Unicode="true" />
+          <Property Name="city" Type="String" Nullable="false" MaxLength="45" FixedLength="true" Unicode="true" />
+          <Property Name="state" Type="String" Nullable="false" MaxLength="45" FixedLength="true" Unicode="true" />
           <Property Name="addressID" Type="Int32" Nullable="false" />
-          <Property Name="email" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="UserID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Users_address" FromRole="address" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="zaardCurrentModel.FK_Users_address" FromRole="address" ToRole="User" />
         </EntityType>
         <EntityType Name="BidItem">
           <Key>
             <PropertyRef Name="bidItemID" />
           </Key>
-          <Property Name="itemCategory" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="itemCategory" Type="String" MaxLength="45" FixedLength="true" Unicode="true" />
           <Property Name="itemName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="itemLink" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="itemLocation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="itemDescription" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
           <Property Name="isDigital" Type="Boolean" />
           <Property Name="bidItemID" Type="Int32" Nullable="false" />
           <Property Name="auctionStatus" Type="Boolean" />
           <Property Name="auctionStart" Type="DateTime" Precision="3" />
           <Property Name="auctionEnd" Type="DateTime" Precision="3" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Bid" Relationship="Self.FK_BidItem_Bids" FromRole="BidItem" ToRole="Bids" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Users_BidItem" FromRole="BidItem" ToRole="Users" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Bid">
           <Key>
-            <PropertyRef Name="bidItemID" />
+            <PropertyRef Name="bidID" />
           </Key>
           <Property Name="bidAmount" Type="Int32" Nullable="false" />
           <Property Name="bidTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="bidItemID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BidItem" Relationship="Self.FK_BidItem_Bids" FromRole="Bids" ToRole="BidItem" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Users_Bids" FromRole="Bids" ToRole="Users" />
+          <Property Name="bidID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="zaardCurrentModel.FK_Users_Bids" FromRole="Bid" ToRole="User" />
         </EntityType>
         <EntityType Name="BuyItem">
           <Key>
             <PropertyRef Name="buyItemID" />
           </Key>
           <Property Name="buyItemID" Type="Int32" Nullable="false" />
-          <Property Name="stock" Type="String" MaxLength="45" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="stock" Type="String" Nullable="false" MaxLength="45" FixedLength="true" Unicode="true" />
+          <Property Name="price" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
           <Property Name="released" Type="Boolean" />
           <Property Name="itemType" Type="String" MaxLength="45" FixedLength="true" Unicode="true" />
           <Property Name="genre" Type="String" MaxLength="45" FixedLength="true" Unicode="true" />
@@ -356,8 +384,24 @@
           <Property Name="supplierID" Type="Int32" Nullable="false" />
           <Property Name="isDigital" Type="Boolean" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK_BuyItem_Review" FromRole="BuyItem" ToRole="Review" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK_Supplier_BuyItem" FromRole="BuyItem" ToRole="Supplier" />
+          <NavigationProperty Name="Reviews" Relationship="zaardCurrentModel.FK_BuyItem_Review" FromRole="BuyItem" ToRole="Review" />
+          <NavigationProperty Name="Supplier" Relationship="zaardCurrentModel.FK_Supplier_BuyItem" FromRole="BuyItem" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="NewBidItem">
+          <Key>
+            <PropertyRef Name="bidItemID" />
+          </Key>
+          <Property Name="itemType" Type="String" MaxLength="45" FixedLength="true" Unicode="true" />
+          <Property Name="itemName" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="itemLink" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="itemLocation" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="itemDescription" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="isDigital" Type="Boolean" />
+          <Property Name="bidItemID" Type="Int32" Nullable="false" />
+          <Property Name="auctionStatus" Type="Boolean" />
+          <Property Name="auctionStart" Type="DateTime" Precision="3" />
+          <Property Name="auctionEnd" Type="DateTime" Precision="3" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="paymentInfo">
           <Key>
@@ -371,7 +415,7 @@
           <Property Name="expiration" Type="String" MaxLength="45" FixedLength="true" Unicode="true" />
           <Property Name="cvv" Type="String" MaxLength="45" FixedLength="true" Unicode="true" />
           <Property Name="timeOfPurchase" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="User" Relationship="Self.FK_paymentInfo_Users" FromRole="paymentInfo" ToRole="Users" />
+          <NavigationProperty Name="User" Relationship="zaardCurrentModel.FK_paymentInfo_Users" FromRole="paymentInfo" ToRole="User" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -383,8 +427,8 @@
           <Property Name="userID" Type="Int32" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="reviewID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="BuyItem" Relationship="Self.FK_BuyItem_Review" FromRole="Review" ToRole="BuyItem" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Users_Review" FromRole="Review" ToRole="Users" />
+          <NavigationProperty Name="BuyItem" Relationship="zaardCurrentModel.FK_BuyItem_Review" FromRole="Review" ToRole="BuyItem" />
+          <NavigationProperty Name="User" Relationship="zaardCurrentModel.FK_Users_Review" FromRole="Review" ToRole="User" />
         </EntityType>
         <EntityType Name="Sale">
           <Key>
@@ -396,18 +440,18 @@
           <Property Name="buyItemID" Type="Int32" Nullable="false" />
           <Property Name="bidItemID" Type="Int32" Nullable="false" />
           <Property Name="time" Type="Time" Precision="7" />
-          <NavigationProperty Name="Supplier" Relationship="Self.FK_Supplier_Sales" FromRole="Sales" ToRole="Supplier" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Users_Sales" FromRole="Sales" ToRole="Users" />
+          <NavigationProperty Name="Supplier" Relationship="zaardCurrentModel.FK_Supplier_Sales" FromRole="Sale" ToRole="Supplier" />
+          <NavigationProperty Name="User" Relationship="zaardCurrentModel.FK_Users_Sales" FromRole="Sale" ToRole="User" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
             <PropertyRef Name="supplierID" />
           </Key>
           <Property Name="supplierID" Type="Int32" Nullable="false" />
-          <Property Name="supplierPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="supplierEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="BuyItems" Relationship="Self.FK_Supplier_BuyItem" FromRole="Supplier" ToRole="BuyItem" />
-          <NavigationProperty Name="Sales" Relationship="Self.FK_Supplier_Sales" FromRole="Supplier" ToRole="Sales" />
+          <Property Name="supplierPhone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="supplierEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BuyItems" Relationship="zaardCurrentModel.FK_Supplier_BuyItem" FromRole="Supplier" ToRole="BuyItem" />
+          <NavigationProperty Name="Sales" Relationship="zaardCurrentModel.FK_Supplier_Sales" FromRole="Supplier" ToRole="Sale" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -420,19 +464,18 @@
           <Property Name="annualIncome" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="birthdate" Type="DateTime" Precision="0" />
           <Property Name="createdOn" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="addresses" Relationship="Self.FK_Users_address" FromRole="Users" ToRole="address" />
-          <NavigationProperty Name="BidItems" Relationship="Self.FK_Users_BidItem" FromRole="Users" ToRole="BidItem" />
-          <NavigationProperty Name="Bids" Relationship="Self.FK_Users_Bids" FromRole="Users" ToRole="Bids" />
-          <NavigationProperty Name="paymentInfoes" Relationship="Self.FK_paymentInfo_Users" FromRole="Users" ToRole="paymentInfo" />
-          <NavigationProperty Name="Reviews" Relationship="Self.FK_Users_Review" FromRole="Users" ToRole="Review" />
-          <NavigationProperty Name="Sales" Relationship="Self.FK_Users_Sales" FromRole="Users" ToRole="Sales" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="addresses" Relationship="zaardCurrentModel.FK_Users_address" FromRole="User" ToRole="address" />
+          <NavigationProperty Name="Bids" Relationship="zaardCurrentModel.FK_Users_Bids" FromRole="User" ToRole="Bid" />
+          <NavigationProperty Name="paymentInfoes" Relationship="zaardCurrentModel.FK_paymentInfo_Users" FromRole="User" ToRole="paymentInfo" />
+          <NavigationProperty Name="Reviews" Relationship="zaardCurrentModel.FK_Users_Review" FromRole="User" ToRole="Review" />
+          <NavigationProperty Name="Sales" Relationship="zaardCurrentModel.FK_Users_Sales" FromRole="User" ToRole="Sale" />
         </EntityType>
         <Association Name="FK_Users_address">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="address" Type="Self.address" Multiplicity="*" />
+          <End Type="zaardCurrentModel.User" Role="User" Multiplicity="1" />
+          <End Type="zaardCurrentModel.address" Role="address" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="User">
               <PropertyRef Name="userID" />
             </Principal>
             <Dependent Role="address">
@@ -440,45 +483,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BidItem_Bids">
-          <End Role="BidItem" Type="Self.BidItem" Multiplicity="1" />
-          <End Role="Bids" Type="Self.Bid" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="BidItem">
-              <PropertyRef Name="bidItemID" />
-            </Principal>
-            <Dependent Role="Bids">
-              <PropertyRef Name="bidItemID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Users_BidItem">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="BidItem" Type="Self.BidItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="userID" />
-            </Principal>
-            <Dependent Role="BidItem">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Users_Bids">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="Bids" Type="Self.Bid" Multiplicity="*" />
+          <End Type="zaardCurrentModel.User" Role="User" Multiplicity="1" />
+          <End Type="zaardCurrentModel.Bid" Role="Bid" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="User">
               <PropertyRef Name="userID" />
             </Principal>
-            <Dependent Role="Bids">
+            <Dependent Role="Bid">
               <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_BuyItem_Review">
-          <End Role="BuyItem" Type="Self.BuyItem" Multiplicity="1" />
-          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <End Type="zaardCurrentModel.BuyItem" Role="BuyItem" Multiplicity="1" />
+          <End Type="zaardCurrentModel.Review" Role="Review" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BuyItem">
               <PropertyRef Name="buyItemID" />
@@ -489,8 +508,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Supplier_BuyItem">
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
-          <End Role="BuyItem" Type="Self.BuyItem" Multiplicity="*" />
+          <End Type="zaardCurrentModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="zaardCurrentModel.BuyItem" Role="BuyItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Supplier">
               <PropertyRef Name="supplierID" />
@@ -501,10 +520,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_paymentInfo_Users">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="paymentInfo" Type="Self.paymentInfo" Multiplicity="*" />
+          <End Type="zaardCurrentModel.User" Role="User" Multiplicity="1" />
+          <End Type="zaardCurrentModel.paymentInfo" Role="paymentInfo" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="User">
               <PropertyRef Name="userID" />
             </Principal>
             <Dependent Role="paymentInfo">
@@ -513,10 +532,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Review">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="Review" Type="Self.Review" Multiplicity="*" />
+          <End Type="zaardCurrentModel.User" Role="User" Multiplicity="1" />
+          <End Type="zaardCurrentModel.Review" Role="Review" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="User">
               <PropertyRef Name="userID" />
             </Principal>
             <Dependent Role="Review">
@@ -525,80 +544,29 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Supplier_Sales">
-          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
-          <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+          <End Type="zaardCurrentModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="zaardCurrentModel.Sale" Role="Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Supplier">
               <PropertyRef Name="supplierID" />
             </Principal>
-            <Dependent Role="Sales">
+            <Dependent Role="Sale">
               <PropertyRef Name="supplierID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Sales">
-          <End Role="Users" Type="Self.User" Multiplicity="1" />
-          <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
+          <End Type="zaardCurrentModel.User" Role="User" Multiplicity="1" />
+          <End Type="zaardCurrentModel.Sale" Role="Sale" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Users">
+            <Principal Role="User">
               <PropertyRef Name="userID" />
             </Principal>
-            <Dependent Role="Sales">
+            <Dependent Role="Sale">
               <PropertyRef Name="userID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="zaardCurrentEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="addresses" EntityType="Self.address" />
-          <EntitySet Name="BidItems" EntityType="Self.BidItem" />
-          <EntitySet Name="Bids" EntityType="Self.Bid" />
-          <EntitySet Name="BuyItems" EntityType="Self.BuyItem" />
-          <EntitySet Name="paymentInfoes" EntityType="Self.paymentInfo" />
-          <EntitySet Name="Reviews" EntityType="Self.Review" />
-          <EntitySet Name="Sales" EntityType="Self.Sale" />
-          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
-          <EntitySet Name="Users" EntityType="Self.User" />
-          <AssociationSet Name="FK_Users_address" Association="Self.FK_Users_address">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="address" EntitySet="addresses" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BidItem_Bids" Association="Self.FK_BidItem_Bids">
-            <End Role="BidItem" EntitySet="BidItems" />
-            <End Role="Bids" EntitySet="Bids" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_BidItem" Association="Self.FK_Users_BidItem">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="BidItem" EntitySet="BidItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Bids" Association="Self.FK_Users_Bids">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Bids" EntitySet="Bids" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BuyItem_Review" Association="Self.FK_BuyItem_Review">
-            <End Role="BuyItem" EntitySet="BuyItems" />
-            <End Role="Review" EntitySet="Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Supplier_BuyItem" Association="Self.FK_Supplier_BuyItem">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="BuyItem" EntitySet="BuyItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_paymentInfo_Users" Association="Self.FK_paymentInfo_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="paymentInfo" EntitySet="paymentInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Review" Association="Self.FK_Users_Review">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Review" EntitySet="Reviews" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Supplier_Sales" Association="Self.FK_Supplier_Sales">
-            <End Role="Supplier" EntitySet="Suppliers" />
-            <End Role="Sales" EntitySet="Sales" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Sales" Association="Self.FK_Users_Sales">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Sales" EntitySet="Sales" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -608,109 +576,127 @@
           <EntitySetMapping Name="addresses">
             <EntityTypeMapping TypeName="zaardCurrentModel.address">
               <MappingFragment StoreEntitySet="address">
-                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
-                <ScalarProperty Name="street" ColumnName="street" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="state" ColumnName="state" />
-                <ScalarProperty Name="addressID" ColumnName="addressID" />
-                <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="addressID" ColumnName="addressID" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="street" ColumnName="street" />
+                <ScalarProperty Name="zipcode" ColumnName="zipcode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BidItems">
             <EntityTypeMapping TypeName="zaardCurrentModel.BidItem">
               <MappingFragment StoreEntitySet="BidItem">
-                <ScalarProperty Name="itemCategory" ColumnName="itemCategory" />
-                <ScalarProperty Name="itemName" ColumnName="itemName" />
-                <ScalarProperty Name="itemLink" ColumnName="itemLink" />
-                <ScalarProperty Name="itemLocation" ColumnName="itemLocation" />
-                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="isDigital" ColumnName="isDigital" />
-                <ScalarProperty Name="bidItemID" ColumnName="bidItemID" />
-                <ScalarProperty Name="auctionStatus" ColumnName="auctionStatus" />
-                <ScalarProperty Name="auctionStart" ColumnName="auctionStart" />
-                <ScalarProperty Name="auctionEnd" ColumnName="auctionEnd" />
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="auctionEnd" ColumnName="auctionEnd" />
+                <ScalarProperty Name="auctionStart" ColumnName="auctionStart" />
+                <ScalarProperty Name="auctionStatus" ColumnName="auctionStatus" />
+                <ScalarProperty Name="bidItemID" ColumnName="bidItemID" />
+                <ScalarProperty Name="isDigital" ColumnName="isDigital" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="itemLocation" ColumnName="itemLocation" />
+                <ScalarProperty Name="itemLink" ColumnName="itemLink" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="itemCategory" ColumnName="itemCategory" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bids">
             <EntityTypeMapping TypeName="zaardCurrentModel.Bid">
               <MappingFragment StoreEntitySet="Bids">
-                <ScalarProperty Name="bidAmount" ColumnName="bidAmount" />
-                <ScalarProperty Name="bidTime" ColumnName="bidTime" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="bidID" ColumnName="bidID" />
                 <ScalarProperty Name="bidItemID" ColumnName="bidItemID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="bidTime" ColumnName="bidTime" />
+                <ScalarProperty Name="bidAmount" ColumnName="bidAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BuyItems">
             <EntityTypeMapping TypeName="zaardCurrentModel.BuyItem">
               <MappingFragment StoreEntitySet="BuyItem">
-                <ScalarProperty Name="buyItemID" ColumnName="buyItemID" />
-                <ScalarProperty Name="stock" ColumnName="stock" />
-                <ScalarProperty Name="price" ColumnName="price" />
-                <ScalarProperty Name="released" ColumnName="released" />
-                <ScalarProperty Name="itemType" ColumnName="itemType" />
-                <ScalarProperty Name="genre" ColumnName="genre" />
-                <ScalarProperty Name="fiction" ColumnName="fiction" />
-                <ScalarProperty Name="minAge" ColumnName="minAge" />
-                <ScalarProperty Name="itemName" ColumnName="itemName" />
-                <ScalarProperty Name="itemLink" ColumnName="itemLink" />
-                <ScalarProperty Name="itemLocation" ColumnName="itemLocation" />
-                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
-                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
-                <ScalarProperty Name="isDigital" ColumnName="isDigital" />
                 <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="isDigital" ColumnName="isDigital" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="itemLocation" ColumnName="itemLocation" />
+                <ScalarProperty Name="itemLink" ColumnName="itemLink" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="minAge" ColumnName="minAge" />
+                <ScalarProperty Name="fiction" ColumnName="fiction" />
+                <ScalarProperty Name="genre" ColumnName="genre" />
+                <ScalarProperty Name="itemType" ColumnName="itemType" />
+                <ScalarProperty Name="released" ColumnName="released" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="buyItemID" ColumnName="buyItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NewBidItems">
+            <EntityTypeMapping TypeName="zaardCurrentModel.NewBidItem">
+              <MappingFragment StoreEntitySet="NewBidItem">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="auctionEnd" ColumnName="auctionEnd" />
+                <ScalarProperty Name="auctionStart" ColumnName="auctionStart" />
+                <ScalarProperty Name="auctionStatus" ColumnName="auctionStatus" />
+                <ScalarProperty Name="bidItemID" ColumnName="bidItemID" />
+                <ScalarProperty Name="isDigital" ColumnName="isDigital" />
+                <ScalarProperty Name="itemDescription" ColumnName="itemDescription" />
+                <ScalarProperty Name="itemLocation" ColumnName="itemLocation" />
+                <ScalarProperty Name="itemLink" ColumnName="itemLink" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="itemType" ColumnName="itemType" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="paymentInfoes">
             <EntityTypeMapping TypeName="zaardCurrentModel.paymentInfo">
               <MappingFragment StoreEntitySet="paymentInfo">
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="paymentID" ColumnName="paymentID" />
-                <ScalarProperty Name="nameOnCard" ColumnName="nameOnCard" />
-                <ScalarProperty Name="cardNum" ColumnName="cardNum" />
-                <ScalarProperty Name="cardType" ColumnName="cardType" />
-                <ScalarProperty Name="expiration" ColumnName="expiration" />
-                <ScalarProperty Name="cvv" ColumnName="cvv" />
                 <ScalarProperty Name="timeOfPurchase" ColumnName="timeOfPurchase" />
+                <ScalarProperty Name="cvv" ColumnName="cvv" />
+                <ScalarProperty Name="expiration" ColumnName="expiration" />
+                <ScalarProperty Name="cardType" ColumnName="cardType" />
+                <ScalarProperty Name="cardNum" ColumnName="cardNum" />
+                <ScalarProperty Name="nameOnCard" ColumnName="nameOnCard" />
+                <ScalarProperty Name="paymentID" ColumnName="paymentID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reviews">
             <EntityTypeMapping TypeName="zaardCurrentModel.Review">
               <MappingFragment StoreEntitySet="Review">
-                <ScalarProperty Name="buyItemID" ColumnName="buyItemID" />
-                <ScalarProperty Name="reviewText" ColumnName="reviewText" />
-                <ScalarProperty Name="starValue" ColumnName="starValue" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="reviewID" ColumnName="reviewID" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="starValue" ColumnName="starValue" />
+                <ScalarProperty Name="reviewText" ColumnName="reviewText" />
+                <ScalarProperty Name="buyItemID" ColumnName="buyItemID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sales">
             <EntityTypeMapping TypeName="zaardCurrentModel.Sale">
               <MappingFragment StoreEntitySet="Sales">
-                <ScalarProperty Name="saleID" ColumnName="saleID" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
-                <ScalarProperty Name="buyItemID" ColumnName="buyItemID" />
-                <ScalarProperty Name="bidItemID" ColumnName="bidItemID" />
                 <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="bidItemID" ColumnName="bidItemID" />
+                <ScalarProperty Name="buyItemID" ColumnName="buyItemID" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="saleID" ColumnName="saleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="zaardCurrentModel.Supplier">
               <MappingFragment StoreEntitySet="Supplier">
-                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
-                <ScalarProperty Name="supplierPhone" ColumnName="supplierPhone" />
                 <ScalarProperty Name="supplierEmail" ColumnName="supplierEmail" />
+                <ScalarProperty Name="supplierPhone" ColumnName="supplierPhone" />
+                <ScalarProperty Name="supplierID" ColumnName="supplierID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -718,13 +704,13 @@
             <EntityTypeMapping TypeName="zaardCurrentModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="gender" ColumnName="gender" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="annualIncome" ColumnName="annualIncome" />
-                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
                 <ScalarProperty Name="createdOn" ColumnName="createdOn" />
+                <ScalarProperty Name="birthdate" ColumnName="birthdate" />
+                <ScalarProperty Name="annualIncome" ColumnName="annualIncome" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -29,6 +29,7 @@ namespace zaard_application.Models
         public virtual DbSet<BidItem> BidItems { get; set; }
         public virtual DbSet<Bid> Bids { get; set; }
         public virtual DbSet<BuyItem> BuyItems { get; set; }
+        public virtual DbSet<NewBidItem> NewBidItems { get; set; }
         public virtual DbSet<paymentInfo> paymentInfoes { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
         public virtual DbSet<Sale> Sales { get; set; }

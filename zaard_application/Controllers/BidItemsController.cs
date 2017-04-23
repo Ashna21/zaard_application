@@ -12,15 +12,15 @@ namespace zaard_application.Controllers
 {
     public class BidItemsController : Controller
     {
-        private zaardNetworkEntities db = new zaardNetworkEntities();
-        //private zaardCurrentEntities db = new zaardCurrentEntities();
+        //private zaardNetworkEntities db = new zaardNetworkEntities();
+        private zaardCurrentEntities db = new zaardCurrentEntities();
 
         // GET: BidItems
-        public ActionResult Index()
-        {
-            var bidItems = db.BidItems.Include(b => b.Bid).Include(b => b.User);
-            return View(bidItems.ToList());
-        }
+        //public ActionResult Index()
+        //{
+        //    var bidItems = db.BidItems.Include(b => b.Bid).Include(b => b.User);
+        //    return View(bidItems.ToList());
+        //}
 
         public ActionResult BookDetails()
         {
@@ -48,7 +48,16 @@ namespace zaard_application.Controllers
         }
         public ActionResult moreInfo(int bidItemId)
         {
-            int maxBid = (from b in db.Bids where b.bidItemID == bidItemId select b.bidAmount).Max();
+            int maxBid;
+            int bidCount = (from b in db.Bids where b.bidItemID == bidItemId select b.bidAmount).Count();
+            if (bidCount > 0)
+            {
+                maxBid = (from b in db.Bids where b.bidItemID == bidItemId select b.bidAmount).Max();
+            }
+            else
+            {
+                maxBid = 0;
+            }
             if (maxBid == 0)
             {
                 Session["maxBid"] = "No Bid has been made yet";
@@ -81,14 +90,37 @@ namespace zaard_application.Controllers
             Random rand = new Random();
             newBid.bidID = rand.Next();
             BidItem bidItem = (from u in db.BidItems where u.bidItemID == bidItemID select u).FirstOrDefault();
-            int currentMax = (int) Session["maxBid"];
+
+            int maxBid;
+            int bidCount = (from b in db.Bids where b.bidItemID == bidItemID select b.bidAmount).Count();
+            if (bidCount > 0)
+            {
+                maxBid = (from b in db.Bids where b.bidItemID == bidItemID select b.bidAmount).Max();
+            }
+            else
+            {
+                maxBid = 0;
+            }
+
+            int currentMax = maxBid;
+
+
             if (bid.bidAmount < currentMax || newBid.bidTime > bidItem.auctionEnd)
             {
-                RedirectToAction("bidErrorPage");
+                return RedirectToAction("bidErrorPage");
             }
-            db.Bids.Add(newBid);
-            db.SaveChanges();
-            return RedirectToAction("moreinfo", new { bidItemId = bidItemID });
+            else
+            {
+                db.Bids.Add(newBid);
+                db.SaveChanges();
+                return RedirectToAction("moreinfo", new { bidItemId = bidItemID });
+            }
+            return null;
+        }
+
+        public ActionResult bidErrorPage ()
+        {
+            return View();
         }
 
         // GET: BidItems/Details/5

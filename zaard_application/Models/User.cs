@@ -18,7 +18,6 @@ namespace zaard_application.Models
         public User()
         {
             this.addresses = new HashSet<address>();
-            this.BidItems = new HashSet<BidItem>();
             this.Bids = new HashSet<Bid>();
             this.paymentInfoes = new HashSet<paymentInfo>();
             this.Reviews = new HashSet<Review>();
@@ -36,8 +35,6 @@ namespace zaard_application.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<address> addresses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BidItem> BidItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bid> Bids { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
