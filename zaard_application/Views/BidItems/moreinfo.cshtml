@@ -4,12 +4,12 @@
 }
 
 <h2>Product Information</h2>
-<div>
+<div class="col-md-6">
     <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.itemName)
-            <h2>The Bid is at: @Session["maxBid"]</h2>
+           
         </dt>
 
         <dd>
@@ -76,6 +76,10 @@
     @*<a class="btn btn-success" href="~/BidItems/makeBidPage" new{itemID = model.bidItemID}>Bid Item &raquo;</a>*@
     @Html.ActionLink("Bid Item", "makeBidPage")
 
+</div>
+
+<div class="col-md-6">
+    <h2>The Bid is at: @Session["maxBid"]</h2>
 </div>
 
 

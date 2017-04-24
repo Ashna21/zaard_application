@@ -29,53 +29,64 @@
                     @*<li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>*@
-                @Html.Partial("_LoginPartial")
+               @if (@Session["email"] == null)
+               { @Html.Partial("_LoginPartial") }
+               else
+               {
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @*@Html.Label("Hello" + Session["email"]);*@
+                        @Html.ActionLink("Hello " + Session["email"] + "!", null, null, routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                 </ul>
+               }
+
             </div>
-       
-        </div>
-    </nav>
-    <div class="container-fluid">
-            <div class="row row-offcanvas row-offcanvas-left">
-                <div id="sidebar" class="sidebar-offcanvas">
-                    <div class="col-md-12">
-                        <h3>Search</h3>
-                        <ul class="nav nav-pills nav-stacked">
-                            <li>
-                                @using (Html.BeginForm("search", "BuyItems", FormMethod.Get, new { @class = "form" }))
-                                {
-                                    <p>
-                                         @Html.TextBox("searchItem") 
-                                        <input type="submit" value="Search" />
-                                    </p>
-                                }
-                            </li>
-                            <li>@Html.ActionLink("Books", "BookDetails", "BuyItems")</li>
-                            <ul>                               
-                                <li>@Html.ActionLink("Fiction", "selection_genre", "BuyItems", new { given_itemType = "Book" , given_genre = "fiction" }, null)</li>
-                                <li>@Html.ActionLink("Literature", "selection_genre", "BuyItems", new { given_itemType = "Book", given_genre = "Literature" }, null)</li>
-                                <li>@Html.ActionLink("Mystery", "selection_genre", "BuyItems", new { given_itemType = "Book", given_genre = "Mystery" }, null)</li>
-                            </ul> 
-                            <li>@Html.ActionLink("Movies", "MovieDetails", "BuyItems")</li>
-                            <ul>
-                                <li>@Html.ActionLink("Romance", "selection_genre", "BuyItems", new { given_itemType = "Movie", given_genre = "Romance" }, null)</li>
-                                <li>@Html.ActionLink("Fairy Tale", "selection_genre", "BuyItems", new { given_itemType = "Movie", given_genre = "Fairy Tale" }, null)</li>
-                                <li>@Html.ActionLink("Mystery", "selection_genre", "BuyItems", new { given_itemType = "Movie", given_genre = "Mystery" }, null)</li>
-                            </ul>
-                            <li>@Html.ActionLink("Games", "GameDetails", "BuyItems")</li>
-                            <ul>
-                                <li>@Html.ActionLink("3D", "selection_genre", "BuyItems", new { given_itemType = "Game", given_genre = "3D" }, null)</li>
-                                <li>@Html.ActionLink("Kids", "selection_genre", "BuyItems", new { given_itemType = "Game", given_genre = "Kids" }, null)</li>
-                                <li>@Html.ActionLink("Mystery", "selection_genre", "BuyItems", new { given_itemType = "Game", given_genre = "Mystery" }, null)</li>
-                            </ul>
-                        </ul>
-                    </div>
+
                 </div>
-                <div id="main">
-                    <div class="col-md-12">
-                        <div>
-                            @*<img src="@Url.Content(item.ImageFile)" alt="" />*@
-                            <img src="~/Content/images/backgroundimage.png" style="height: 45px; width: 1100px" />
+            </nav>
+            <div class="container-fluid">
+                    <div class="row row-offcanvas row-offcanvas-left">
+                        <div id="sidebar" class="sidebar-offcanvas">
+                            <div class="col-md-12">
+                                <h3>Search</h3>
+                                <ul class="nav nav-pills nav-stacked">
+                                    <li>
+                                        @using (Html.BeginForm("search", "BuyItems", FormMethod.Get, new { @class = "form" }))
+                                        {
+                                            <p>
+                                                 @Html.TextBox("searchItem")
+                                                <input type="submit" value="Search" />
+                                            </p>
+                                        }
+                                    </li>
+                                    <li>@Html.ActionLink("Books", "BookDetails", "BuyItems")</li>
+                                    <ul>
+                                        <li>@Html.ActionLink("Fiction", "selection_genre", "BuyItems", new { given_itemType = "Book" , given_genre = "fiction" }, null)</li>
+                                        <li>@Html.ActionLink("Literature", "selection_genre", "BuyItems", new { given_itemType = "Book", given_genre = "Literature" }, null)</li>
+                                        <li>@Html.ActionLink("Mystery", "selection_genre", "BuyItems", new { given_itemType = "Book", given_genre = "Mystery" }, null)</li>
+                                    </ul>
+                                    <li>@Html.ActionLink("Movies", "MovieDetails", "BuyItems")</li>
+                                    <ul>
+                                        <li>@Html.ActionLink("Romance", "selection_genre", "BuyItems", new { given_itemType = "Movie", given_genre = "Romance" }, null)</li>
+                                        <li>@Html.ActionLink("Fairy Tale", "selection_genre", "BuyItems", new { given_itemType = "Movie", given_genre = "Fairy Tale" }, null)</li>
+                                        <li>@Html.ActionLink("Mystery", "selection_genre", "BuyItems", new { given_itemType = "Movie", given_genre = "Mystery" }, null)</li>
+                                    </ul>
+                                    <li>@Html.ActionLink("Games", "GameDetails", "BuyItems")</li>
+                                    <ul>
+                                        <li>@Html.ActionLink("3D", "selection_genre", "BuyItems", new { given_itemType = "Game", given_genre = "3D" }, null)</li>
+                                        <li>@Html.ActionLink("Kids", "selection_genre", "BuyItems", new { given_itemType = "Game", given_genre = "Kids" }, null)</li>
+                                        <li>@Html.ActionLink("Mystery", "selection_genre", "BuyItems", new { given_itemType = "Game", given_genre = "Mystery" }, null)</li>
+                                    </ul>
+                                </ul>
+                            </div>
                         </div>
+                        <div id="main">
+                            <div class="col-md-12">
+                                <div>
+                                    @*<img src="@Url.Content(item.ImageFile)" alt="" />*@
+                    <img src="~/Content/images/backgroundimage.png" style="height: 45px; width: 1100px" />
+</div>
                         <div class="container body-content">
                             @RenderBody()
                             <hr />

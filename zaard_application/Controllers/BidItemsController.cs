@@ -68,11 +68,51 @@ namespace zaard_application.Controllers
             }
             Session["bidItemId"] = bidItemId;
             BidItem selectedItem = (from b in db.BidItems where b.bidItemID == bidItemId select b).FirstOrDefault();
+            Session["auctionStart"] = selectedItem.auctionStart;
+            Session["auctionEnd"] = selectedItem.auctionEnd;
             Session["bidItemName"] = selectedItem.itemName;
             return View(selectedItem);
 
         }
+        public ActionResult Review(int bidItemId)
+        {
+            List<Review> Review = (from b in db.Reviews where b.buyItemID == bidItemId select b).ToList();
+            //BuyItem selectedItem = (from b in db.BuyItems where b.buyItemID == buyItemId select b).FirstOrDefault();
+            return View(Review);
 
+        }
+        public ActionResult writeReview(int bidItemId)
+        {
+            BidItem selectedItem = (from b in db.BidItems where b.bidItemID == bidItemId select b).FirstOrDefault();
+            Session["itemName"] = selectedItem.itemName;
+            Session["itemId"] = selectedItem.bidItemID;
+            return View();
+        }
+
+
+        public ActionResult submitReview(Review review, int reviewItemID, string userEmail)
+        {
+            if (userEmail == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+
+
+            Review newReview = new Review();
+            User reviewingUser = (from u in db.Users where u.email == userEmail select u).FirstOrDefault();
+            newReview.buyItemID = reviewItemID;
+            newReview.reviewText = review.reviewText;
+            newReview.starValue = review.starValue;
+            newReview.userID = reviewingUser.userID;
+            newReview.date = DateTime.Now;
+            Random rand = new Random();
+            newReview.reviewID = rand.Next();
+
+            db.Reviews.Add(newReview);
+            db.SaveChanges();
+            return RedirectToAction("Review", new { bidItemId = reviewItemID });
+
+        }
         public ActionResult makeBidPage ()
         {
 

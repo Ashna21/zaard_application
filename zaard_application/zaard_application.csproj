@@ -419,6 +419,8 @@
     <Content Include="Views\BidItems\makeBidPage.cshtml" />
     <Content Include="Views\BidItems\bidErrorPage.cshtml" />
     <Content Include="Views\BuyItems\search.cshtml" />
+    <Content Include="Views\BidItems\Review.cshtml" />
+    <Content Include="Views\BidItems\writeReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
