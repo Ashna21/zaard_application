@@ -8,15 +8,14 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.itemName)
-           
+          <p><small> Name </small> </p>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.itemName)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.itemCategory)
+            <p><small> Category </small> </p>
         </dt>
 
         <dd>
@@ -24,7 +23,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.auctionStatus)
+            <p><small> status </small> </p>
         </dt>
 
         <dd>
@@ -32,7 +31,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.auctionStart)
+            <p><small> Start </small> </p>
         </dt>
 
         <dd>
@@ -40,7 +39,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.auctionEnd)
+            <p><small> End </small> </p>
         </dt>
 
         <dd>
@@ -48,7 +47,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.itemDescription)
+            <p><small> Description </small> </p>
         </dt>
 
         <dd>
@@ -56,29 +55,37 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.image)
+            <p><small> Image </small> </p>
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.image)
         </dd>
 
-        <dd>
+        @*<dd>
             @Html.ActionLink("Read Reviews!", "Review", new { bidItemId = Model.bidItemID })
         </dd>
         <dd>
             @Html.ActionLink("Write a Review!", "writeReview", new { bidItemId = Model.bidItemID })
-        </dd>
+        </dd>*@
 
 
 
     </dl>
     @*<a class="btn btn-success" href="~/BidItems/makeBidPage" new{itemID = model.bidItemID}>Bid Item &raquo;</a>*@
-    @Html.ActionLink("Bid Item", "makeBidPage")
+    <div class="col-md-2">
+        <p> <span class="label label-warning">@Html.ActionLink("Bid Item", "makeBidPage") </span> </p>
+    </div>
+    <div class="col-md-2">
+        <p> <span class="label label-warning">@Html.ActionLink("Read Reviews!", "Review", new { bidItemId = Model.bidItemID })</span> </p>
+    </div>
+    <div class="col-md-2">
+        <p> <span class="label label-warning">@Html.ActionLink("Write Review!", "writeReview", new { bidItemId = Model.bidItemID }) </span> </p>
+    </div>
 
 </div>
 
-<div class="col-md-6">
+<div class="col-md-4">
     <h2><span class="label label-success">The current bid is at: @Session["maxBid"]</span></h2>
     @*<h2>The Bid is at: @Session["maxBid"]</h2>*@
 </div>
