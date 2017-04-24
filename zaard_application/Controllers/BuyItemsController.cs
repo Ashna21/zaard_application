@@ -82,8 +82,15 @@ namespace zaard_application.Controllers {
             return View();
         }
 
+        
         public ActionResult submitReview(Review review, int reviewItemID, string userEmail)
         {
+            if (userEmail == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+
+
             Review newReview = new Review();
             User reviewingUser = (from u in db.Users where u.email == userEmail select u).FirstOrDefault();
             newReview.buyItemID = reviewItemID;
@@ -123,7 +130,10 @@ namespace zaard_application.Controllers {
 
         public ActionResult AddAddress(address address, string useremail)
         {
-
+            if (useremail == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
             address newAddress = new address();
             int userIdFromAddress = (from u in db.Users where u.email == useremail select u.userID).FirstOrDefault();
             Session["userIdInItems"] = userIdFromAddress;
@@ -152,6 +162,11 @@ namespace zaard_application.Controllers {
 
         public ActionResult AddPayment(paymentInfo payment, string useremail)
         {
+            if (useremail == null)
+            {
+                return RedirectToAction("Login", "Users");
+            }
+
             paymentInfo newPayment = new paymentInfo();
             int userIdFromPayment = (from u in db.Users where u.email == useremail select u.userID).FirstOrDefault();
             newPayment.cardNum = payment.cardNum;
