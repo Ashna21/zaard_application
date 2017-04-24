@@ -4,7 +4,7 @@
 }
 
 <h2>Product Information</h2>
-<div class="col-md-6">
+<div class="col-md-8">
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -73,19 +73,19 @@
 
     </dl>
     @*<a class="btn btn-success" href="~/BidItems/makeBidPage" new{itemID = model.bidItemID}>Bid Item &raquo;</a>*@
-    <div class="col-md-2">
-        <p> <span class="label label-warning">@Html.ActionLink("Bid Item", "makeBidPage") </span> </p>
+    <div class="col-md-3">
+        <h2> <span class="label label-warning">@Html.ActionLink("Bid Item", "makeBidPage") </span> </h2>
     </div>
-    <div class="col-md-2">
-        <p> <span class="label label-warning">@Html.ActionLink("Read Reviews!", "Review", new { bidItemId = Model.bidItemID })</span> </p>
+    <div class="col-md-4">
+        <h2> <span class="label label-warning">@Html.ActionLink("Read Reviews!", "Review", new { bidItemId = Model.bidItemID })</span> </h2>
     </div>
-    <div class="col-md-2">
-        <p> <span class="label label-warning">@Html.ActionLink("Write Review!", "writeReview", new { bidItemId = Model.bidItemID }) </span> </p>
+    <div class="col-md-4">
+        <h2> <span class="label label-warning">@Html.ActionLink("Write Review!", "writeReview", new { bidItemId = Model.bidItemID }) </span> </h2>
     </div>
 
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
     <h2><span class="label label-success">The current bid is at: @Session["maxBid"]</span></h2>
     @*<h2>The Bid is at: @Session["maxBid"]</h2>*@
 </div>

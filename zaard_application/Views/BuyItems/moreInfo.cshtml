@@ -4,92 +4,101 @@
     }
 
 <h2>Product Information</h2>
-<div>
+<div class="col-md-8">
         <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.itemName)
-            </dt>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.itemName)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.itemName)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.itemName)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.price)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.price)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.price)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.price)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.released)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.released)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.released)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.released)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.itemType)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.itemType)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.itemType)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.itemType)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.genre)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.genre)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.genre)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.genre)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.minAge)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.minAge)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.minAge)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.minAge)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.itemLink)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.itemLink)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.itemLink)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.itemLink)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.itemDescription)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.itemDescription)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.itemDescription)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.itemDescription)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.image)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.image)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.image)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.image)
+        </dd>
 
-            <dd>
-                @Html.ActionLink("Read Reviews!", "Review", new { buyItemId = Model.buyItemID })
-            </dd>
-            <dd>
-                @Html.ActionLink("Write a Review!", "writeReview", new { buyItemId = Model.buyItemID })
-            </dd>
-
-         
+        <dd>
+            @Html.ActionLink("Read Reviews!", "Review", new { buyItemId = Model.buyItemID })
+        </dd>
+        <dd>
+            @Html.ActionLink("Write a Review!", "writeReview", new { buyItemId = Model.buyItemID })
+        </dd>
+    </dl>
+    <div class="col-md-3">
+        <h2><span class="label label-warning"><a  href="~/BuyItems/addAddressPage">Buy Item &raquo;</a></span></h2>
+    </div>
+    
+   <div class="col-md-4">
+         <h2><span class="label label-warning">@Html.ActionLink("Read Reviews!", "Review", new { buyItemId = Model.buyItemID })</span></h2>
+   </div>
+   <div class="col-md-4">
+        <h2><span class="label label-warning">@Html.ActionLink("Write a Review!", "writeReview", new { buyItemId = Model.buyItemID })</span></h2>
+   </div>
           
-        </dl>
-    <a class="btn btn-success" href="~/BuyItems/addAddressPage">Buy Item &raquo;</a>
+        
+   
     </div>
     
        
