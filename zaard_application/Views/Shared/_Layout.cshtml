@@ -40,6 +40,15 @@
                     <div class="col-md-12">
                         <h3>Search</h3>
                         <ul class="nav nav-pills nav-stacked">
+                            <li>
+                                @using (Html.BeginForm("search", "BuyItems", FormMethod.Get, new { @class = "form" }))
+                                {
+                                    <p>
+                                         @Html.TextBox("searchItem") 
+                                        <input type="submit" value="Search" />
+                                    </p>
+                                }
+                            </li>
                             <li>@Html.ActionLink("Books", "BookDetails", "BuyItems")</li>
                             <ul>                               
                                 <li>@Html.ActionLink("Fiction", "selection_genre", "BuyItems", new { given_itemType = "Book" , given_genre = "fiction" }, null)</li>

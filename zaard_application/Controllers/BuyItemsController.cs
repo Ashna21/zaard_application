@@ -41,6 +41,11 @@ namespace zaard_application.Controllers {
             return View(Book);
         }
 
+        public ActionResult search(string searchItem)
+        {
+            List<BuyItem> searchedItemList = (from i in db.BuyItems where i.itemName.Contains(searchItem) || i.itemDescription.Contains(searchItem) || i.itemType.Contains(searchItem) select i).ToList();
+            return View(searchedItemList);
+        }
         public ActionResult GameDetails()
         {
             string itemTYPE = "Game";
